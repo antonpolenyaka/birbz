@@ -1,0 +1,30 @@
+@import "../../../assets/scss/app";
+
+.button {
+  @include button();
+  @include centerRow();
+  background: transparent;
+  box-sizing: border-box;
+  border: 2px solid #7EDB57;
+  border-radius: 100px;
+  width: 152px;
+  height: 40px;
+  @include RedHatMono();
+  font-size: 14px;
+  line-height: 19px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #FFFFFF;
+  transition: 0.3s;
+
+  @include tablet() {
+    width: 352px;
+    height: 56px;
+    font-size: 20px;
+    line-height: 26px;
+  }
+
+  &:hover {
+    background: #7EDB57;
+  }
+}

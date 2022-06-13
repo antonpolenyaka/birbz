@@ -1,0 +1,175 @@
+@import "../../assets/scss/app";
+
+.birbz {
+  overflow: hidden;
+  background: #1C6B4E;
+  padding-top: 26px;
+  padding-bottom: 16px;
+
+  @include tablet {
+    padding-top: 50px;
+    padding-bottom: 40px;
+  }
+
+  @include laptop {
+    padding-top: 50px;
+    padding-bottom: 48px;
+  }
+
+  @include desktop {
+    padding-top: 65px;
+    padding-bottom: 50px;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .title {
+    position: relative;
+    z-index: 2;
+    margin-top: 43px;
+    @include PressStart();
+    font-size: 50px;
+    line-height: 50px;
+    text-align: center;
+    text-transform: uppercase;
+
+    @include tablet {
+      margin-top: 96px;
+      font-size: 80px;
+      line-height: 80px;
+    }
+
+    @include laptop {
+      margin-top: 48px;
+      font-size: 80px;
+      line-height: 80px;
+      text-align: left;
+    }
+
+    @include desktop {
+      margin-top: 65px;
+      font-size: 100px;
+      line-height: 100px;
+    }
+  }
+
+  .subtitle {
+    position: relative;
+    z-index: 2;
+    margin-top: 172px;
+    margin-left: auto;
+    margin-right: auto;
+    @include NeueMachina;
+    font-size: 24px;
+    line-height: 23px;
+    width: 265px;
+    text-align: center;
+    filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.5));
+
+    @include tablet {
+      margin-top: 429px;
+      margin-left: 0;
+      margin-right: 0;
+      font-size: 50px;
+      line-height: 48px;
+      width: 552px;
+      text-align: left;
+    }
+
+    @include laptop {
+      margin-top: 231px;
+    }
+
+    @include desktop {
+      margin-top: 366px;
+    }
+
+  }
+
+  .bottomRow {
+    position: relative;
+    z-index: 2;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include tablet {
+      margin-top: 74px;
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    @include laptop {
+      margin-top: 56px;
+    }
+
+    @include desktop {
+      margin-top: 44px;
+    }
+
+    .text {
+      filter: drop-shadow(0px 0px 20px rgba(0, 0, 0, 0.5));
+      @include NeueMachina;
+      font-size: 16px;
+      line-height: 15px;
+      text-align: center;
+      width: 237px;
+
+      & > span {
+        color: $color_green;
+      }
+
+      @include tablet {
+        font-size: 30px;
+        line-height: 29px;
+        text-align: left;
+        width: 444px;
+      }
+
+    }
+
+    .socialLinks {
+      margin-top: 26px;
+
+      @include tablet {
+        margin-top: 0;
+      }
+    }
+
+  }
+
+  .back {
+    position: absolute;
+    z-index: 1;
+    width: 326px;
+    height: auto;
+    top: 160px;
+    left: calc(50% - 20px);
+    transform: translate(-50%, 0);
+
+    @include tablet {
+      width: 775px;
+      top: 330px;
+      left: calc(50% - 40px);
+    }
+
+    @include laptop {
+      width: 1045px;
+      top: 224px;
+      left: calc(50% - 65px);
+    }
+
+    @include desktop {
+      width: 1508px;
+      top: 238px;
+      left: calc(50% - 110px);
+    }
+  }
+
+}

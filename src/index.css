@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@500&family=Press+Start+2P&family=Red+Hat+Mono:wght@500&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  color: #FEFEFD;
+  font-family: 'Lato', sans-serif;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Neue Machina';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Neue Machina'), url(./assets/fonts/NeueMachina-Medium.ttf) format('truetype');
+}
+
+

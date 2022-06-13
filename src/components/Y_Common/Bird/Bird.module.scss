@@ -1,0 +1,34 @@
+@import "../../../assets/scss/app";
+
+.bird {
+  position: relative;
+  width: 68px;
+  height: 40px;
+
+  @include tablet {
+    width: 130px;
+    height: 76px;
+  }
+
+  svg:nth-child(1) {
+    width: 68px;
+    height: 40px;
+
+    @include tablet {
+      width: 130px;
+      height: 76px;
+    }
+  }
+
+  svg:nth-child(2) {
+    width: 68px;
+    height: 32px;
+    @include absoluteCenter();
+
+    @include tablet {
+      width: 130px;
+      height: 61px;
+    }
+  }
+
+}

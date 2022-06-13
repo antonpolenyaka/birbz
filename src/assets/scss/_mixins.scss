@@ -1,0 +1,73 @@
+//========= FONTS ===========//
+@mixin Nunito  {
+  font-family: 'Nunito', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@mixin PressStart  {
+  font-family: 'Press Start 2P', cursive;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@mixin RedHatMono  {
+  font-family: 'Red Hat Mono', monospace;
+  font-style: normal;
+  font-weight: 500;
+}
+
+@mixin NeueMachina  {
+  font-family: 'Neue Machina', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+}
+
+//========= BREAK POINTS ===========//
+@mixin tablet {
+  @media all and (min-width: 768px) {
+    @content;
+  }
+}
+
+@mixin laptop {
+  @media all and (min-width: 992px) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media all and (min-width: 1200px) {
+    @content;
+  }
+}
+
+//========= OTHER ===========//
+
+@mixin centerColumn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin centerRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin button() {
+  cursor: pointer;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+@mixin absoluteCenter() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+

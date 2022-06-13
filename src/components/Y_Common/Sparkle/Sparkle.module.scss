@@ -1,0 +1,11 @@
+@import "../../../assets/scss/app";
+
+.sparkle {
+  position: relative;
+  width: 1px;
+  height: 1px;
+
+  img {
+    display: block;
+  }
+}

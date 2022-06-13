@@ -1,0 +1,132 @@
+@import "../../assets/scss/app";
+
+.studio {
+  background: #1C6B4E;
+
+  & > div {
+    padding-top: 26px;
+    padding-bottom: 16px;
+
+    @include tablet {
+      padding-top: 50px;
+      padding-bottom: 35px;
+    }
+
+    @include laptop {
+      padding-top: 50px;
+      padding-bottom: 40px;
+    }
+
+    @include desktop {
+      padding-top: 65px;
+      padding-bottom: 75px;
+    }
+  }
+
+  .titleBlock {
+    display: flex;
+    align-items: center;
+
+    .title {
+      width: 120px;
+      @include PressStart;
+      font-size: 20px;
+      line-height: 20px;
+      text-transform: uppercase;
+
+      @include tablet {
+        width: 240px;
+        font-size: 40px;
+        line-height: 40px;
+      }
+    }
+
+    .bird {
+      margin-left: 16px;
+    }
+  }
+
+  .eggBlock {
+    margin-top: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include tablet {
+      margin-top: 70px;
+    }
+
+    @include laptop {
+      margin-top: 50px;
+      flex-direction: row-reverse;
+      justify-content: flex-end;
+    }
+
+    @include desktop {
+      margin-top: 60px;
+    }
+
+    img {
+      width: 287px;
+      height: auto;
+
+      @include tablet {
+        width: 587px;
+      }
+
+      @include laptop {
+        width: 509px;
+        margin-left: 160px;
+      }
+
+      @include desktop {
+        width: 700px;
+        margin-left: 140px;
+      }
+    }
+
+    p {
+      white-space: nowrap;
+      margin-top: 44px;
+      @include NeueMachina;
+      font-size: 20px;
+      line-height: 19px;
+      text-align: center;
+      color: #000000;
+
+      @include tablet {
+        margin-top: 72px;
+        font-size: 24px;
+        line-height: 23px;
+      }
+
+      @include laptop {
+        margin-top: 0;
+      }
+
+
+    }
+
+  }
+
+  .socialLinks {
+    margin-top: 98px;
+    display: flex;
+    justify-content: center;
+
+    @include tablet {
+      margin-top: 168px;
+      justify-content: start;
+    }
+
+    @include laptop {
+      margin-top: 91px;
+    }
+
+    @include desktop {
+      margin-top: 69px;
+    }
+
+  }
+
+}

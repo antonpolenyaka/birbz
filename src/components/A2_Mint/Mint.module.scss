@@ -1,0 +1,218 @@
+@import "../../assets/scss/app";
+
+.mint {
+  background: #AFAEAA;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 105px;
+    padding-bottom: 28px;
+
+    @include tablet {
+      padding-top: 200px;
+      padding-bottom: 200px;
+    }
+
+    @include laptop {
+      padding-top: 70px;
+      padding-bottom: 70px;
+    }
+
+    @include desktop {
+      padding-top: 134px;
+      padding-bottom: 96px;
+    }
+
+  }
+
+  .bird {
+    position: absolute;
+    top: 26px;
+    left: 16px;
+
+    @include tablet {
+      top: 50px;
+      left: 40px;
+    }
+
+    @include laptop {
+      top: 50px;
+      left: 48px;
+    }
+
+    @include desktop {
+      top: 65px;
+      left: 0;
+    }
+
+  }
+
+  .eggWrapper {
+    position: relative;
+
+    .sparkle1 {
+      position: absolute;
+      bottom: 29%;
+      left: 18%;
+    }
+
+    .sparkle2 {
+      position: absolute;
+      bottom: 2%;
+      left: 56%;
+    }
+
+    .sparkle3 {
+      position: absolute;
+      bottom: 27%;
+      left: 82%;
+    }
+
+    .egg {
+      display: block;
+      width: 288px;
+      height: 193px;
+
+      @include tablet {
+        width: 392px;
+        height: 301px;
+      }
+
+      @include laptop {
+        width: 448px;
+        height: 301px;
+      }
+
+      @include desktop {
+        width: 608px;
+        height: 429px;
+      }
+    }
+  }
+
+
+
+
+  .countBlock {
+    margin-top: 37px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include tablet {
+      margin-top: 51px;
+    }
+
+    @include desktop {
+      margin-top: 54px;
+    }
+
+    .btn {
+      @include button;
+      width: 32px;
+      height: 32px;
+
+      @include tablet {
+        width: 56px;
+        height: 56px;
+      }
+
+      svg {
+        width: 32px;
+        height: 32px;
+
+        @include tablet {
+          width: 56px;
+          height: 56px;
+        }
+      }
+
+    }
+
+    .count {
+      user-select: none;
+      @include PressStart;
+      color: #000000;
+      font-size: 40px;
+      line-height: 40px;
+      margin: 0 40px;
+
+      @include tablet {
+        font-size: 60px;
+        line-height: 60px;
+        margin: 0 100px;
+      }
+    }
+
+  }
+
+  .btnMint {
+    @include button;
+    margin-top: 27px;
+    border: 2px solid #7EDB57;
+    border-radius: 100px;
+    background: transparent;
+    width: 288px;
+    height: 56px;
+    transition: 0.3s;
+
+    @include tablet {
+      margin-top: 51px;
+      width: 544px;
+    }
+
+    @include desktop {
+      margin-top: 64px;
+
+    }
+
+    p {
+      @include RedHatMono;
+      font-size: 14px;
+      line-height: 19px;
+      text-align: center;
+      text-transform: uppercase;
+      color: #000;
+      transition: 0.3s;
+
+      @include tablet {
+        font-size: 20px;
+        line-height: 26px;
+      }
+    }
+
+    &:hover {
+      background: #7EDB57;
+
+      p {
+        color: #FEFEFD;
+      }
+    }
+
+
+  }
+
+  .max {
+    margin-top: 27px;
+    height: 56px;
+    @include centerRow;
+    @include RedHatMono;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: center;
+    color: #000;
+
+    @include tablet {
+      margin-top: 51px;
+      font-size: 20px;
+      line-height: 26px;
+    }
+
+    @include desktop {
+      margin-top: 20px;
+    }
+  }
+
+}

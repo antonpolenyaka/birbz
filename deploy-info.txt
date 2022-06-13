@@ -1,0 +1,56 @@
+Starting migrations...
+======================
+> Network name:    'development'
+> Network id:      5777
+> Block gas limit: 6721975 (0x6691b7)
+
+
+1_initial_migration.js
+======================
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x28e3e8411d64358dd077bc6fb18781424d2694153293663307620c45eb8fc4f9
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x749CBD46cc1C88bb51eaA3995F8c77f5875D85a5
+   > block number:        7
+   > block timestamp:     1655139314
+   > account:             0x2D3775589dAc52846965925Ff3B1624aFB119F8E
+   > balance:             999.93617136
+   > gas used:            248842 (0x3cc0a)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00497684 ETH
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00497684 ETH
+
+
+2_initial_BirbzNFTToken.js
+==========================
+
+   Deploying 'BirbzNFTToken'
+   -------------------------
+   > transaction hash:    0x06e6c8d07e5941e7fe74ceb602ae25deaf3c734ad0d83355266a0811ddd7df1b
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xA6F49262b1907Dc31DCD935E37Dd43056fbc6F77
+   > block number:        9
+   > block timestamp:     1655139317
+   > account:             0x2D3775589dAc52846965925Ff3B1624aFB119F8E
+   > balance:             999.88403966
+   > gas used:            2564072 (0x271fe8)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.05128144 ETH
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.05128144 ETH
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.05625828 ETH

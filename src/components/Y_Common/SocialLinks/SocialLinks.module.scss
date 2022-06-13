@@ -1,0 +1,43 @@
+@import "../../../assets/scss/app";
+
+.socialLinks {
+  display: flex;
+  align-items: center;
+
+  a {
+    display: block;
+    text-decoration: none;
+
+    &:nth-child(1), &:nth-child(1) svg {
+      width: 32px;
+      height: 32px;
+
+      @include tablet {
+        width: 53px;
+        height: 53px;
+      }
+    }
+
+    &:nth-child(2) {
+      margin-left: 7px;
+      width: 26px;
+      height: 26px;
+
+      @include tablet {
+        margin-left: 12px;
+        width: 43px;
+        height: 43px;
+      }
+
+      svg {
+        width: 26px;
+        height: 26px;
+
+        @include tablet {
+          width: 43px;
+          height: 43px;
+        }
+      }
+    }
+  }
+}

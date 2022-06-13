@@ -1,0 +1,30 @@
+@import "../../../assets/scss/app";
+
+.container {
+  padding-left: 16px;
+  padding-right: 16px;
+
+  @include tablet {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @include laptop {
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  @include desktop {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .inner {
+    position: relative;
+
+    @include desktop {
+      width: 1120px;
+      margin: 0 auto;
+    }
+  }
+}

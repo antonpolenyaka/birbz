@@ -1,0 +1,98 @@
+@import "../../assets/scss/app";
+
+.faq {
+  background: #000000;
+
+  & > div {
+    padding-top: 110px;
+    padding-bottom: 68px;
+
+    @include tablet {
+      padding-top: 300px;
+      padding-bottom: 220px;
+    }
+
+    @include laptop {
+      padding-top: 206px;
+      padding-bottom: 85px;
+    }
+
+    @include desktop {
+      padding-top: 290px;
+      padding-bottom: 202px;
+    }
+  }
+
+  .bird {
+    position: absolute;
+    top: 26px;
+    left: 16px;
+
+    @include tablet {
+      top: 50px;
+      left: 40px;
+    }
+
+    @include laptop {
+      top: 50px;
+      left: 48px;
+    }
+
+    @include desktop {
+      top: 65px;
+      left: 0;
+    }
+
+  }
+
+  .items {
+
+    @include laptop {
+      width: 832px;
+    }
+
+    .item {
+
+      .q {
+        @include PressStart;
+        font-size: 18px;
+        line-height: 18px;
+        text-transform: uppercase;
+        color: $color_green;
+
+        @include tablet {
+          font-size: 30px;
+          line-height: 30px;
+        }
+      }
+
+      .a {
+        margin-top: 24px;
+        @include NeueMachina;
+        font-size: 16px;
+        line-height: 15px;
+
+        @include tablet {
+          margin-top: 36px;
+          font-size: 24px;
+          line-height: 23px;
+        }
+
+        @include laptop {
+          margin-top: 40px;
+        }
+      }
+
+
+      &:not(:first-child) {
+        margin-top: 60px;
+
+        @include laptop {
+          margin-top: 80px;
+        }
+
+      }
+    }
+  }
+
+}
