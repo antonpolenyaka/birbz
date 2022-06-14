@@ -59,6 +59,7 @@ const Mint: React.FC = observer(() => {
                     await mintTransactionProcessing(transaction);
                 }
                 console.info(transaction);
+                window.alert(`${_amount} has minted for ${wallet}!`)
             } else {
                 console.error(message, "ERROR: Contract is not exist, is null reference")
             }
