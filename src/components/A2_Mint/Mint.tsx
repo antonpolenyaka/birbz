@@ -50,17 +50,38 @@ const Mint: React.FC = observer(() => {
 
             // Call mint function & and set state
             if (_contract !== null) {
-                const transaction = await _contract.mint(_walletAddress, _amount);
+                console.log(`Mint ${_amount} NFT to wallet '${wallet}' in contract ${_contract.address}`);
+                const amountToPayInETH:any = await _contract.getAmountToPay(_amount);
+                const options = { value: ethers.utils.parseEther(amountToPayInETH.toString()) };
+                let transaction:any = await _contract.mintMultiple(wallet, _amount, "http://mintable.com/1.jpg", options);
                 if (transaction.code !== 4001) {
                     // Set txTime, txHash, txConfirmations
                     await mintTransactionProcessing(transaction);
                 }
+                console.info(transaction);
             } else {
                 console.error(message, "ERROR: Contract is not exist, is null reference")
             }
 
-        } catch (error) {
+        } catch (error: any) {
             console.error(message, error);
+            if(error.code && error.data && error.data.message) {
+                if(error.data.message.startsWith("VM Exception while processing transaction: revert")) {
+                    const solidityError:string = error.data.message.replace("VM Exception while processing transaction: revert", "");
+                    window.alert(solidityError);
+                } else {
+                    window.alert(error.data.message);
+                }
+            } else if(error.message) {
+                if(error.message.startsWith("MetaMask Tx Signature:")) {
+                    const metamaskError:string = error.message.replace("MetaMask Tx Signature:", "");
+                    window.alert(metamaskError);
+                } else {
+                    window.alert(error.message);
+                }
+            } else {
+                window.alert(error);
+            }
         } finally {
             _setIsLoading(false);
         }
@@ -129,9 +150,6 @@ const Mint: React.FC = observer(() => {
             </button>
 
             <p className={style.max}>MAX 10 PER WALLET</p>
-            <p>Is loading: {_isLoading}</p>
-            <p>Send Mint Tx Time: {_sendMintTxTime}</p>
-            <p>Last Mint Transaction Hash: {_lastMintTransactionHash}</p>
 
         </Container>
     )

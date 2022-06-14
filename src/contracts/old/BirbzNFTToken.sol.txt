@@ -47,6 +47,25 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     event WalletAddedToDenyList(address wallet);
     event BalanceWithdrawed(address to, uint256 balance);
 
+    // Errors
+
+    // Error when we try to mint, but contract is not in active status
+    error ERROR_MINT_CONTRAT_NOT_ACTIVE(address wallet, Status currentStatus);
+    // Error when we try to mint 0 NFT
+    error ERROR_MINT_ZERO_NFT_TO_MINT(address wallet);
+    // Error when we try to mint more NFT what is possible
+    error ERROR_MINT_MAX_NFT_TO_MINT(address wallet, uint256 maxAmountToMint);
+    // Error when we try to mint to zero wallet address
+    error ERROR_MINT_DESTINATION_ZERO_ADDRESS();
+    // Error when we try to mint for the same wallet more than allowed
+    error ERROR_MINT_MAX_LIMIT_NFT_BY_WALLET(address wallet, uint256 walletCurrentAmount);
+    // Error when we try to mint NFT to wallet int deny list
+    error ERROR_MINT_WALLET_IN_DENY_LIST(address wallet);
+    // Error when we try to mint more, what is possilbe by max supply defined
+    error ERROR_MINT_SUPPLY_DENIED(address wallet, uint256 maxSupply, uint256 currentSupply, uint256 amountToMint);
+    // Error when we try to mint, but we don't send needed ethers (value ethers * amount to mint)
+    error ERROR_MINT_ETHER_AMOUNT_DENIED(address wallet, uint256 sendedEthersAmount, uint256 requiredEthersAmount);
+
     // Constructors
 
     constructor() ERC721("BIRBZ", "BIRBZ") {
@@ -62,23 +81,47 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     function _checkBeforeMint(address wallet_, uint256 amountToMint_) private view {
         // Contract status
         require(_status == Status.Active, "ERROR: Status of contract is not active");
+        if(_status != Status.Active) {
+            revert ERROR_MINT_CONTRAT_NOT_ACTIVE(wallet_, _status);
+        }
         // Check amount to mint > 0
         require(amountToMint_ > 0, "ERROR: Amount NFT to mint is zero");
+        if(amountToMint_ == 0) {
+            revert ERROR_MINT_ZERO_NFT_TO_MINT(wallet_);
+        }
         // Check amount to mint
         require(amountToMint_ <= MAX_AMOUNT_TO_MINT, "ERROR: Amount NFT to mint is over max");
+        if(amountToMint_ > MAX_AMOUNT_TO_MINT) {
+            revert ERROR_MINT_MAX_NFT_TO_MINT(wallet_, MAX_AMOUNT_TO_MINT);
+        }
         // Check wallet address
         require(wallet_ != address(0), "ERROR: Wallet address is need to be diferent 0");
+        if(wallet_ == address(0)) {
+            revert ERROR_MINT_DESTINATION_ZERO_ADDRESS();
+        }        
         // Check number of already minted plus new amount
         uint256 currentAmount = _walletToTokens[wallet_].length;
         require((currentAmount + amountToMint_) <= MAX_TOKENS_BY_WALLET, "ERROR: Is not possible mint this amount of NFT to this wallet");
+        if((currentAmount + amountToMint_) > MAX_TOKENS_BY_WALLET) {
+            revert ERROR_MINT_MAX_LIMIT_NFT_BY_WALLET(wallet_, currentAmount);
+        }
         // Check deny list
         require(_denylist[wallet_] == false, "ERROR: Wallet is in deny list");
+        if(_denylist[wallet_] == true) {
+            revert ERROR_MINT_WALLET_IN_DENY_LIST(wallet_);
+        }
         // Check supply denied
         uint currentSupply = _tokenIds.current();
         require(currentSupply + amountToMint_ <= _maxSupply, "ERROR: Total supply denied");
+        if(currentSupply + amountToMint_ > _maxSupply) {
+            revert ERROR_MINT_SUPPLY_DENIED(wallet_, _maxSupply, currentSupply, amountToMint_);
+        }
         // Check ether amount denied
-        uint256 requiredEthersAmount = _price * amountToMint_;
-        require(msg.value >= requiredEthersAmount, "ERROR: Ether amount is lower of required");
+        // uint256 requiredEthersAmount = _price * amountToMint_;
+        // require(msg.value >= _price * amountToMint_, "ERROR: Ether amount is lower of required");
+        // if(msg.value < _price * amountToMint_) {
+        //     revert ERROR_MINT_ETHER_AMOUNT_DENIED(wallet_, msg.value, requiredEthersAmount);
+        // }
     }
 
     // Safe mint one NFT with indicated URI
