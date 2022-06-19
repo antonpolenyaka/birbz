@@ -1,0 +1,112 @@
+@import "../../assets/scss/app";
+
+.accountModal {
+  position: absolute;
+  bottom: -18px;
+  right: 0;
+  width: calc(100vw - 32px);
+  z-index: 100;
+  box-sizing: border-box;
+  padding: 16px;
+  transform: translateY(100%);
+  background: #FEFEFD;
+  border: 3px solid #FFFFFF;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+  border-radius: 20px;
+  display: none;
+
+  @include tablet {
+    width: 448px;
+  }
+
+  &_show {
+    display: flex;
+    flex-direction: column;
+
+    @include tablet {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+
+  .infoWrapper {
+    display: flex;
+    align-items: center;
+
+    .imgWallet {
+      display: block;
+      width: 62px;
+      height: 62px;
+    }
+
+    .info {
+      margin-left: 8px;
+
+      .label {
+        @include NeueMachina;
+        font-size: 24px;
+        line-height: 24px;
+        color: #000000;
+      }
+
+      .address {
+        margin-top: 5px;
+        @include RedHatMono;
+        font-size: 14px;
+        line-height: 19px;
+        color: #7EDB57;
+        width: 135px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .copyWrapper {
+        margin-top: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 80px;
+
+        .label {
+          @include RedHatMono;
+          font-size: 14px;
+          line-height: 19px;
+          color: #AFAEAA;
+        }
+
+        .copyBtn {
+          @include button;
+          width: 18px;
+          height: 18px;
+        }
+      }
+    }
+  }
+
+  .btnDisconnect {
+    @include button;
+    @include centerColumn;
+    height: 44px;
+    border: 2px solid #7EDB57;
+    border-radius: 30px;
+    background: transparent;
+    @include RedHatMono;
+    font-size: 14px;
+    line-height: 19px;
+    text-align: center;
+    color: #000;
+    margin-top: 16px;
+    transition: 0.3s;
+
+    @include tablet {
+      margin-top: 0;
+      width: 172px;
+    }
+
+    &:hover {
+      background: #7EDB57;
+    }
+  }
+
+}

@@ -25,6 +25,11 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    .btnWrapper {
+      position: relative;
+    }
+
   }
 
   .title {
