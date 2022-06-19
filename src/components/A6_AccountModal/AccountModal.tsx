@@ -8,15 +8,20 @@ import {useOutsideClick} from "../../hooks/useOutsideClick";
 
 interface IAccountModal {
     show: boolean
-    onClose: () => void
+    walletAddress: string,
+    onClose: () => void,
+    onDisconnect: () => void
 }
 
-export const AccountModal: FC<IAccountModal> = ({show, onClose}) => {
+export const AccountModal: FC<IAccountModal> = ({show, walletAddress, onClose, onDisconnect}) => {
     const ref = useRef<HTMLDivElement>(null)
-    const onDisconnectHandler = () => onClose();
+    const onDisconnectHandler = () => { 
+        onDisconnect();
+        onClose();
+    }
     useOutsideClick(ref, () => onClose());
 
-    const address = "0xtestf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
+    const address = walletAddress;
 
     const [startShowCopied, setStartShowCopied] = useState(false);
     const onCopyHandler = () => {
@@ -24,7 +29,6 @@ export const AccountModal: FC<IAccountModal> = ({show, onClose}) => {
         setStartShowCopied(true);
         setTimeout(() => setStartShowCopied(false), 2000);
     }
-
 
     return (
         <div className={clsx({
@@ -48,7 +52,6 @@ export const AccountModal: FC<IAccountModal> = ({show, onClose}) => {
                     </div>
                 </div>
             </div>
-
 
             <button className={style.btnDisconnect}
                     onClick={onDisconnectHandler}
