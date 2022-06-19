@@ -1,0 +1,151 @@
+@import "../../assets/scss/app";
+
+.connectModal {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 100;
+  display: none;
+
+  &_show {
+    @include centerColumn();
+  }
+
+  .card {
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 290px;
+    padding: 50px 0 30px;
+    background: #1C6B4E;
+    border: 3px solid #FFFFFF;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+
+    @include tablet {
+      width: 607px;
+    }
+
+    .bird {
+      position: absolute;
+      top: -9px;
+      left: -22px;
+      transform: scale(0.35);
+    }
+
+    .closeBtn {
+      @include button;
+      position: absolute;
+      top: 18px;
+      right: 18px;
+    }
+
+    .title {
+      @include NeueMachina;
+      font-size: 30px;
+      line-height: 29px;
+      text-align: center;
+      max-width: 126px;
+
+      @include tablet {
+        max-width: 168px;
+        font-size: 40px;
+        line-height: 39px;
+      }
+    }
+
+    .description {
+      @include NeueMachina;
+      font-size: 16px;
+      line-height: 15px;
+      width: 254px;
+      text-align: center;
+      color: #7EDB57;
+      margin-top: 16px;
+
+      @include tablet {
+        width: 436px;
+        font-size: 20px;
+        line-height: 19px;
+        margin-top: 28px;
+      }
+    }
+
+    .figure {
+      margin-top: 32px;
+      display: block;
+      height: 110px;
+      width: auto;
+
+      @include tablet {
+        height: 210px;
+      }
+    }
+
+    .btn {
+      margin-top: 32px;
+      @include button;
+      @include centerRow;
+      background: transparent;
+      box-sizing: border-box;
+      border: 2px solid #7EDB57;
+      border-radius: 100px;
+      height: 40px;
+      width: 152px;
+      @include RedHatMono();
+      font-size: 14px;
+      line-height: 19px;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: #FFFFFF;
+      transition: 0.3s;
+
+      @include tablet {
+        height: 56px;
+        font-size: 20px;
+        line-height: 26px;
+      }
+
+      &:hover {
+        background: #7EDB57;
+      }
+    }
+
+    &_error {
+      background: #AFAEAA;
+      border: 3px solid #FFFFFF;
+
+      .title {
+        color: #FF0000;
+      }
+
+      .description {
+        color: #000;
+      }
+
+      .figure {
+        transform: translateX(12px);
+
+        @include tablet {
+          transform: translateX(22px);
+        }
+      }
+
+      .btn {
+        border: 2px solid #FEFEFD;
+        color: #000;
+
+        &:hover {
+          background: #FEFEFD;
+        }
+      }
+
+    }
+
+  }
+}

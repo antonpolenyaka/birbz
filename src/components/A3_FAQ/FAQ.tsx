@@ -28,7 +28,7 @@ export const FAQ = () => {
             <div className={style.items}>
                 {
                     items.map(({q, a}, index) => (
-                        <div className={style.item}>
+                        <div className={style.item} key={index}>
                             <p className={style.q}>{q}</p>
                             <p className={style.a}>{a}</p>
                         </div>

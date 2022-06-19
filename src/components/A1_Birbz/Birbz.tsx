@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import style from "./Birbz.module.scss";
-import { Bird } from "../Y_Common/Bird/Bird";
-import { Container } from "../Y_Common/Container/Container";
-import { Button } from "../Y_Common/Button/Button";
+import {Bird} from "../Y_Common/Bird/Bird";
+import {Container} from "../Y_Common/Container/Container";
+import {Button} from "../Y_Common/Button/Button";
 import birbz from "../../assets/png/birbz.png"
-import { SocialLinks } from "../Y_Common/SocialLinks/SocialLinks";
-import { detectEthereumProvider, connect, checkChainId } from "../../services/connectWallet";
+import {SocialLinks} from "../Y_Common/SocialLinks/SocialLinks";
+import {detectEthereumProvider, connect, checkChainId} from "../../services/connectWallet";
 import blockchainInfo from "../../services/blockchainInfo.json";
-import { observer } from 'mobx-react-lite';
-import { ethers } from "ethers";
+import {observer} from 'mobx-react-lite';
+import {ethers} from "ethers";
 import BirbzNFTToken from "../../abis/BirbzNFTToken.json";
+import {ConnectModal} from "../A5_ConnectModal/ConnectModal";
+import {AccountModal} from "../A6_AccountModal/AccountModal";
 
 declare global {
     interface Window {
@@ -19,10 +21,13 @@ declare global {
 }
 
 const Birbz: React.FC = observer(() => {
-
-    const [_walletAddress, setWalletAddress] = React.useState<string>("?");
+    const [_walletAddress, setWalletAddress] = React.useState<string>("");
     const [, _setProvider] = React.useState<ethers.providers.Web3Provider | null>(null);
     const [, _setContract] = React.useState<ethers.Contract | null>(null);
+
+    const [showConnectModal, setShowConnectModal] = useState(false);
+    const [showAccountModal, setShowAccountModal] = useState(false);
+    const error = true;
 
     useEffect(() => {
         if (window.ethereum) {
@@ -31,7 +36,9 @@ const Birbz: React.FC = observer(() => {
 
             _setProvider(provider);
             _setContract(contract);
-        } else { console.warn("Please install MetaMask") }
+        } else {
+            console.warn("Please install MetaMask")
+        }
     }, []);
 
     const connectToWallet = async (message: string) => {
@@ -48,16 +55,35 @@ const Birbz: React.FC = observer(() => {
 
     return (
         <Container className={style.birbz}>
+            <ConnectModal show={showConnectModal}
+                          error={error}
+                          onClose={() => setShowConnectModal(false)}
+            />
+
             <header className={style.header}>
-                <Bird />
-                <Button label="connect wallet" onClick={(event: any) => {
-                    try {
-                        event.preventDefault();
-                        connectToWallet("connectToWallet...");
-                    } catch (err) {
-                        alert(err);
-                    }
-                }} />
+                <Bird/>
+
+                <div className={style.btnWrapper}>
+                    <Button label="connect wallet"
+                            onClick={(event: any) => {
+                                //setShowConnectModal(true);
+                                setShowAccountModal(true)
+
+                                // try {                    //
+                                //     event.preventDefault();
+                                //     connectToWallet("connectToWallet...");
+                                // } catch (err) {
+                                //     alert(err);
+                                // }
+                            }}
+                    />
+                    <AccountModal show={showAccountModal}
+                                  onClose={() => setShowAccountModal(false)}
+                    />
+                </div>
+
+
+
             </header>
             <div className={style.bottomRow}>
                 <p className={style.text}>Wallet: <span>{_walletAddress}</span></p>
@@ -69,10 +95,10 @@ const Birbz: React.FC = observer(() => {
             <div className={style.bottomRow}>
                 <p className={style.text}>Stealth Launch coming soon. Mint for <span>$5</span> below.</p>
 
-                <SocialLinks className={style.socialLinks} />
+                <SocialLinks className={style.socialLinks}/>
             </div>
 
-            <img src={birbz} alt="" className={style.back} />
+            <img src={birbz} alt="" className={style.back}/>
 
         </Container>
     );
