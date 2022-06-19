@@ -11,12 +11,11 @@ import {Bird} from "../Y_Common/Bird/Bird";
 interface IConnectModal {
     show: boolean
     error: boolean
+	description: string,
     onClose: () => void
 }
 
-export const ConnectModal: FC<IConnectModal> = ({show, error, onClose}) => {
-    const descriptionSuccess = "MetaMask enables two methods: restricted and unrestricted. These methods allow the dApp to take actions like connecting to the wallet, signing transactions, and adding or switching networks."
-    const descriptionError = "When trying to connect to the wallet, if a user clicks “Cancel” at any point on this interface and terminates the process, it returns a 4001 error."
+export const ConnectModal: FC<IConnectModal> = ({show, error, description, onClose}) => {
 
     const ref = useRef<HTMLDivElement>(null)
     const onClickHandler = () => onClose();
@@ -43,10 +42,10 @@ export const ConnectModal: FC<IConnectModal> = ({show, error, onClose}) => {
                  </button>
 
                 <p className={style.title}>
-                    {error ? "Error" : "Connect wallet"}
+                    {error ? "Error" : "Information"}
                 </p>
 
-                <p className={style.description}>{error ? descriptionError : descriptionSuccess}</p>
+                <p className={style.description}>{description}</p>
 
                  <img src={error ? imgError : imgSuccess} alt="" className={style.figure}/>
 

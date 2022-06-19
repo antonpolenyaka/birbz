@@ -11,6 +11,7 @@ import { observer } from 'mobx-react-lite';
 import { ethers } from "ethers";
 import blockchainInfo from "../../services/blockchainInfo.json";
 import { detectEthereumProvider, connect, checkChainId } from "../../services/connectWallet";
+import { ConnectModal } from "../A5_ConnectModal/ConnectModal";
 
 declare global {
     interface Window {
@@ -29,6 +30,10 @@ const Mint: React.FC = observer(() => {
     const [_sendMintTxTime, _setSendMintTxTime] = React.useState<string>("");
     const [_lastMintTransactionHash, _setLastMintTransactionHash] = React.useState<string>("");
 
+    const [showConnectModal, setShowConnectModal] = useState(false);
+    const [showModalError, setModalError] = useState(false);
+    const [showModalDescription, setModalDescription] = useState("");
+
     useEffect(() => {
         if (window.ethereum) {
             const provider: ethers.providers.Web3Provider = new ethers.providers.Web3Provider(window.ethereum);
@@ -38,6 +43,20 @@ const Mint: React.FC = observer(() => {
             _setContract(contract);
         } else { console.warn("Please install MetaMask") }
     }, []);
+
+    const showAlertModal = (isError: boolean, message: string) => {
+        setModalError(isError);
+        setModalDescription(message);
+        setShowConnectModal(true);
+    }
+
+    const hidePartWalletInButton = (wallet: string, charToShow: number) => {
+        if (wallet && wallet.length > (charToShow * 2)) {
+            const len = wallet.length;
+            return wallet.substring(0, charToShow) + "..." + wallet.substring(wallet.length - charToShow);
+        }
+        return wallet;
+    }
 
     const mint = async (message: string) => {
         try {
@@ -59,9 +78,10 @@ const Mint: React.FC = observer(() => {
                     await mintTransactionProcessing(transaction);
                 }
                 console.info(transaction);
-                window.alert(`${_amount} has minted for ${wallet}!`)
+                showAlertModal(false, `Congratulations! You have minted ${_amount} NFT's by wallet ${hidePartWalletInButton(wallet, 8)}!`);
             } else {
                 console.error(message, "ERROR: Contract is not exist, is null reference")
+                showAlertModal(true, "ERROR: Contract is not exist, is null reference");
             }
 
         } catch (error: any) {
@@ -69,19 +89,19 @@ const Mint: React.FC = observer(() => {
             if(error.code && error.data && error.data.message) {
                 if(error.data.message.startsWith("VM Exception while processing transaction: revert")) {
                     const solidityError:string = error.data.message.replace("VM Exception while processing transaction: revert", "");
-                    window.alert(solidityError);
+                    showAlertModal(true, solidityError);
                 } else {
-                    window.alert(error.data.message);
+                    showAlertModal(true, error.data.message);
                 }
             } else if(error.message) {
                 if(error.message.startsWith("MetaMask Tx Signature:")) {
                     const metamaskError:string = error.message.replace("MetaMask Tx Signature:", "");
-                    window.alert(metamaskError);
+                    showAlertModal(true, metamaskError);
                 } else {
-                    window.alert(error.message);
+                    showAlertModal(true, message);
                 }
             } else {
-                window.alert(error);
+                showAlertModal(true, error);
             }
         } finally {
             _setIsLoading(false);
@@ -112,7 +132,11 @@ const Mint: React.FC = observer(() => {
 
     return (
         <Container className={style.mint}>
-
+            <ConnectModal show={showConnectModal}
+                error={showModalError}
+                description={showModalDescription}
+                onClose={() => setShowConnectModal(false)}
+            />
             <Bird className={style.bird} />
 
             <div className={style.eggWrapper}>
