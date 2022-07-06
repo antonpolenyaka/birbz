@@ -1,12 +1,12 @@
 {
-    "contractAddress": "0xbf44E6D3b644aE8C408F825A51596E2C023dDc85",
-    "networkIdHex": "0x539",
-    "chainName": "Ganache",
+    "contractAddress": "0x4037f04455c0C1f50D245092A8a383E24adD836a",
+    "networkIdHex": "0x1",
+    "chainName": "Ethereum",
     "nativeCurrency": {
         "name": "ETH",
         "symbol": "ETH",
         "decimals": 18
     },
-    "rpcUrls": "HTTP://127.0.0.1:8545",
+    "rpcUrls": "https://mainnet.infura.io/v3/0dded05c729c49279b03a1e42b5df511",
     "blockExplorerUrls": ""
 }
