@@ -25,7 +25,7 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     uint256 private constant MAX_TOKENS_BY_WALLET = 10;
     uint256 private constant MAX_AMOUNT_TO_MINT = 10;
     uint256 private constant INITIAL_MAX_SUPPLY = 5555;
-    uint256 private constant DEFAULT_NFT_PRICE = 1;
+    uint256 private constant DEFAULT_NFT_PRICE = 1 ether;
 
     // Attributes & Properties
 
@@ -36,7 +36,8 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     Status private _status;
     mapping(address => bool) private _denylist;
     uint256 private _maxSupply;
-    address private _contractAddress;
+    // Who receive pay for NFT minting
+    address payable private _currentPayRecipient;
 
     // Events
 
@@ -45,6 +46,7 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     event MaxSupplyChanged(uint256 oldSupply, uint256 newSupply);
     event WalletAddedToDenyList(address wallet);
     event BalanceWithdrawed(address to, uint256 balance);
+    event PayRecipientChanged(address from, address to);
 
     // Constructors
 
@@ -52,7 +54,7 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
         _maxSupply = INITIAL_MAX_SUPPLY;
         _price = DEFAULT_NFT_PRICE;
         _status = Status.Active;
-        _contractAddress = payable(address(this));
+        _currentPayRecipient = payable(address(this));
     }
 
     // Methods
@@ -113,7 +115,7 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     // Mint one NFT with indicated URI & check if is possilbe to mint
     function mint(address wallet_, string memory tokenURI_) external payable {
         _checkBeforeMint(wallet_, 1);
-        payable(_contractAddress).transfer(_price);
+        _currentPayRecipient.transfer(_price);
         _mintOne(wallet_, tokenURI_);
     }
 
@@ -125,7 +127,7 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     ) external payable {
         _checkBeforeMint(wallet_, amountToMint_);
         uint256 requiredEthersAmount = _price * amountToMint_;
-        payable(_contractAddress).transfer(requiredEthersAmount);
+        _currentPayRecipient.transfer(requiredEthersAmount);
         for (uint256 i = 1; i <= amountToMint_; i++) {
             _mintOne(wallet_, tokenURI_);
         }
@@ -189,12 +191,28 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     }
 
     // Get amount to pay in ETH to mint NFT's
-    function getAmountToPay(uint256 amountToMint)
+    function getAmountToPay(uint256 amountToMint_)
         external
         view
         returns (uint256)
     {
-        return _price * amountToMint;
+        return _price * amountToMint_;
+    }
+
+    function getCurrentPayRecipient() external view returns (address) {
+        return _currentPayRecipient;
+    }
+
+    function setCurrentPayRecipient(address newPayRecipient_)
+        external
+        onlyOwner
+    {
+        require(
+            newPayRecipient_ != address(0),
+            "ERROR: Is not posssible to set recipient of pay 0 address"
+        );
+        emit PayRecipientChanged(_currentPayRecipient, newPayRecipient_);
+        _currentPayRecipient = payable(newPayRecipient_);
     }
 
     fallback() external payable {}
