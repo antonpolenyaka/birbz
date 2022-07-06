@@ -1,18 +1,17 @@
 /*************************************************************************************
- * 
+ *
  * Autor & Owner: Birbz
  *
  * 446576656c6f7065723a20416e746f6e20506f6c656e79616b61 *****************************/
 
 // SPDX-License-Identifier: MIT
-pragma solidity 0.8.14;
+pragma solidity 0.8.15;
 
 import "./ERC721URIStorage.sol";
 import "./Counters.sol";
 import "./Ownable.sol";
 
 contract BirbzNFTToken is ERC721URIStorage, Ownable {
-
     // Enums
 
     enum Status {
@@ -20,13 +19,13 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
         NotActive,
         Paused
     }
-    
+
     // Constants
 
-    uint256 constant private MAX_TOKENS_BY_WALLET = 10;
-    uint256 constant private MAX_AMOUNT_TO_MINT = 10;
-    uint256 constant private INITIAL_MAX_SUPPLY = 5555;
-    uint256 constant private DEFAULT_NFT_PRICE = 1;
+    uint256 private constant MAX_TOKENS_BY_WALLET = 10;
+    uint256 private constant MAX_AMOUNT_TO_MINT = 10;
+    uint256 private constant INITIAL_MAX_SUPPLY = 5555;
+    uint256 private constant DEFAULT_NFT_PRICE = 1;
 
     // Attributes & Properties
 
@@ -59,26 +58,47 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     // Methods
 
     // Check if is possible mint new NFT's
-    function _checkBeforeMint(address wallet_, uint256 amountToMint_) private view {
+    function _checkBeforeMint(address wallet_, uint256 amountToMint_)
+        private
+        view
+    {
         // Contract status
-        require(_status == Status.Active, "ERROR: Status of contract is not active");
+        require(
+            _status == Status.Active,
+            "ERROR: Status of contract is not active"
+        );
         // Check amount to mint > 0
         require(amountToMint_ > 0, "ERROR: Amount NFT to mint is zero");
         // Check amount to mint
-        require(amountToMint_ <= MAX_AMOUNT_TO_MINT, "ERROR: Amount NFT to mint is over max");
+        require(
+            amountToMint_ <= MAX_AMOUNT_TO_MINT,
+            "ERROR: Amount NFT to mint is over max"
+        );
         // Check wallet address
-        require(wallet_ != address(0), "ERROR: Wallet address is need to be diferent 0");
+        require(
+            wallet_ != address(0),
+            "ERROR: Wallet address is need to be diferent 0"
+        );
         // Check number of already minted plus new amount
         uint256 currentAmount = _walletToTokens[wallet_].length;
-        require((currentAmount + amountToMint_) <= MAX_TOKENS_BY_WALLET, "ERROR: Is not possible mint this amount of NFT to this wallet");
+        require(
+            (currentAmount + amountToMint_) <= MAX_TOKENS_BY_WALLET,
+            "ERROR: Is not possible mint this amount of NFT to this wallet"
+        );
         // Check deny list
         require(_denylist[wallet_] == false, "ERROR: Wallet is in deny list");
         // Check supply denied
-        uint currentSupply = _tokenIds.current();
-        require(currentSupply + amountToMint_ <= _maxSupply, "ERROR: Total supply denied");
+        uint256 currentSupply = _tokenIds.current();
+        require(
+            currentSupply + amountToMint_ <= _maxSupply,
+            "ERROR: Total supply denied"
+        );
         // Check ether amount denied
         uint256 requiredEthersAmount = _price * amountToMint_;
-        require(msg.value >= requiredEthersAmount, "ERROR: Ether amount is lower of required");
+        require(
+            msg.value >= requiredEthersAmount,
+            "ERROR: Ether amount is lower of required"
+        );
     }
 
     // Safe mint one NFT with indicated URI
@@ -98,17 +118,21 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     }
 
     // Mint multiple NFT's with indicated URI & check if is possilbe to mint
-    function mintMultiple(address wallet_, uint256 amountToMint_, string memory tokenURI_) external payable {
+    function mintMultiple(
+        address wallet_,
+        uint256 amountToMint_,
+        string memory tokenURI_
+    ) external payable {
         _checkBeforeMint(wallet_, amountToMint_);
         uint256 requiredEthersAmount = _price * amountToMint_;
         payable(_contractAddress).transfer(requiredEthersAmount);
-        for(uint256 i = 1; i <= amountToMint_; i++) {
+        for (uint256 i = 1; i <= amountToMint_; i++) {
             _mintOne(wallet_, tokenURI_);
         }
     }
 
     // Get price of NFT
-    function getPrice() external view returns(uint256) {
+    function getPrice() external view returns (uint256) {
         return _price;
     }
 
@@ -119,7 +143,7 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     }
 
     // Set status of contract
-    function getStatus() external view returns(Status) {
+    function getStatus() external view returns (Status) {
         return _status;
     }
 
@@ -130,7 +154,7 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     }
 
     // Set status of contract
-    function getMaxSupply() external view returns(uint256) {
+    function getMaxSupply() external view returns (uint256) {
         return _maxSupply;
     }
 
@@ -152,7 +176,7 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     }
 
     // Check if wallet in deny list, if wallet is in deny list, is not possible to mint NFT
-    function checkDenyList(address wallet_) external view returns(bool) {
+    function checkDenyList(address wallet_) external view returns (bool) {
         return _denylist[wallet_];
     }
 
@@ -165,13 +189,15 @@ contract BirbzNFTToken is ERC721URIStorage, Ownable {
     }
 
     // Get amount to pay in ETH to mint NFT's
-    function getAmountToPay(uint256 amountToMint) external view returns(uint256) {
+    function getAmountToPay(uint256 amountToMint)
+        external
+        view
+        returns (uint256)
+    {
         return _price * amountToMint;
     }
 
-    fallback() external payable {        
-    }
+    fallback() external payable {}
 
-    receive() external payable {        
-    }
+    receive() external payable {}
 }
